@@ -185,7 +185,9 @@ See LICENSE.txt for more information.
 Project Links:
 
 [GitHub Repository](https://github.com/404pandas/spellements)
+
 [Google Play](https://www.github.com/404pandas/spellements)
+
 [Apple Store](https://www.github.com/404pandas/spellements)
 
 <!-- ACKNOWLEDGMENTS -->
