@@ -1,55 +1,32 @@
-import { getIssue } from '@/lib/dal'
+import { getOrder } from '@/lib/dal'
 import { formatRelativeTime } from '@/lib/utils'
-import { Priority, Status } from '@/lib/types'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import Badge from '@/app/components/ui/Badge'
 import Button from '@/app/components/ui/Button'
 import { ArrowLeftIcon, Edit2Icon } from 'lucide-react'
-import DeleteIssueButton from '../../components/DeleteIssueButton'
+import DeleteOrderButton from '../../components/DeleteOrderButton.js'
 
-export default async function IssuePage({
+export default async function OrderPage({
   params,
 }: {
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const issue = await getIssue(parseInt(id))
+  const order = await getOrder(id)
 
-  if (!issue) {
+  if (!order) {
     notFound()
   }
 
-  const { title, description, status, priority, createdAt, updatedAt, user } =
-    issue
-
-  const getStatusLabel = (status: string) => {
-    switch (status) {
-      case 'backlog':
-        return 'Backlog'
-      case 'todo':
-        return 'Todo'
-      case 'in_progress':
-        return 'In Progress'
-      case 'done':
-        return 'Done'
-      default:
-        return status
-    }
-  }
-
-  const getPriorityLabel = (priority: string) => {
-    switch (priority) {
-      case 'low':
-        return 'Low'
-      case 'medium':
-        return 'Medium'
-      case 'high':
-        return 'High'
-      default:
-        return priority
-    }
-  }
+  const {
+    totalAmount,
+    shippingAddress,
+    shippingStatus,
+    orderStatus,
+    createdAt,
+    updatedAt,
+    user,
+  } = order
 
   return (
     <div className="max-w-4xl mx-auto p-4 md:p-8">
@@ -59,12 +36,12 @@ export default async function IssuePage({
           className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 mb-4"
         >
           <ArrowLeftIcon size={16} className="mr-1" />
-          Back to Issues
+          Back to Orders
         </Link>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <h1 className="text-3xl font-bold">{title}</h1>
+          <h1 className="text-3xl font-bold">{orderStatus}</h1>
           <div className="flex items-center space-x-2">
-            <Link href={`/issues/${id}/edit`}>
+            <Link href={`/orders/${id}/edit`}>
               <Button variant="outline" size="sm">
                 <span className="flex items-center">
                   <Edit2Icon size={16} className="mr-1" />
@@ -72,17 +49,13 @@ export default async function IssuePage({
                 </span>
               </Button>
             </Link>
-            <DeleteIssueButton id={parseInt(id)} />
+            <DeleteOrderButton id={id} />
           </div>
         </div>
       </div>
 
       <div className="bg-white dark:bg-dark-elevated border border-gray-200 dark:border-dark-border-default rounded-lg shadow-sm p-6 mb-8">
         <div className="flex flex-wrap gap-3 mb-6">
-          <Badge status={status as Status}>{getStatusLabel(status)}</Badge>
-          <Badge priority={priority as Priority}>
-            {getPriorityLabel(priority)}
-          </Badge>
           <div className="text-sm text-gray-500">
             Created {formatRelativeTime(new Date(createdAt))}
           </div>
@@ -92,14 +65,6 @@ export default async function IssuePage({
             </div>
           )}
         </div>
-
-        {description ? (
-          <div className="prose dark:prose-invert max-w-none">
-            <p className="whitespace-pre-line">{description}</p>
-          </div>
-        ) : (
-          <p className="text-gray-500 italic">No description provided.</p>
-        )}
       </div>
 
       <div className="bg-white dark:bg-dark-elevated border border-gray-200 dark:border-dark-border-default rounded-lg shadow-sm p-6">
@@ -112,18 +77,18 @@ export default async function IssuePage({
             <p>{user.email}</p>
           </div>
           <div>
-            <p className="text-sm font-medium text-gray-500 mb-1">Status</p>
-            <Badge status={status as Status}>{getStatusLabel(status)}</Badge>
+            <p className="text-sm font-medium text-gray-500 mb-1">Total</p>
+            <p>${totalAmount}</p>
           </div>
           <div>
-            <p className="text-sm font-medium text-gray-500 mb-1">Priority</p>
-            <Badge priority={priority as Priority}>
-              {getPriorityLabel(priority)}
-            </Badge>
+            <p className="text-sm font-medium text-gray-500 mb-1">Shipping</p>
+            <p>{shippingAddress}</p>
           </div>
           <div>
-            <p className="text-sm font-medium text-gray-500 mb-1">Created</p>
-            <p>{formatRelativeTime(new Date(createdAt))}</p>
+            <p className="text-sm font-medium text-gray-500 mb-1">
+              Shipping Status
+            </p>
+            <p>{shippingStatus}</p>
           </div>
         </div>
       </div>

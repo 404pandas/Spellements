@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { orders } from '@/db/schema'
 import { db } from '@/db'
 
+import { v4 as uuidv4 } from 'uuid'
+
 export async function GET() {
   try {
     const allOrders = await db.query.orders.findMany()
@@ -39,6 +41,7 @@ export async function POST(request: Request) {
     const newOrder = await db
       .insert(orders)
       .values({
+        id: uuidv4(), // This allows DB to auto-generate UUID
         userId: data.userId,
         totalAmount: data.totalAmount || null,
         shippingAddress: data.shippingAddress,

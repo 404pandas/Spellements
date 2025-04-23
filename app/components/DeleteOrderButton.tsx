@@ -5,13 +5,13 @@ import { useRouter } from 'next/navigation'
 import Button from './ui/Button'
 import { Trash2Icon } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { deleteIssue } from '@/app/actions/issues'
+import { deleteOrder } from '@/app/actions/orders.js'
 
-interface DeleteIssueButtonProps {
-  id: number
+interface DeleteOrderButtonProps {
+  id: string
 }
 
-export default function DeleteIssueButton({ id }: DeleteIssueButtonProps) {
+export default function DeleteOrderButton({ id }: DeleteOrderButtonProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [showConfirm, setShowConfirm] = useState(false)
@@ -19,18 +19,18 @@ export default function DeleteIssueButton({ id }: DeleteIssueButtonProps) {
   const handleDelete = async () => {
     startTransition(async () => {
       try {
-        const result = await deleteIssue(id)
+        const result = await deleteOrder(id)
 
         if (!result.success) {
-          throw new Error(result.error || 'Failed to delete issue')
+          throw new Error(result.error || 'Failed to delete order')
         }
 
-        toast.success('Issue deleted successfully')
+        toast.success('Order deleted successfully')
         router.push('/dashboard')
         router.refresh()
       } catch (error) {
-        toast.error('Failed to delete issue')
-        console.error('Error deleting issue:', error)
+        toast.error('Failed to delete order')
+        console.error('Error deleting order:', error)
       }
     })
   }

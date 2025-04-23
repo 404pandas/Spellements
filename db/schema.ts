@@ -43,17 +43,30 @@ export const orderSizesEnum = pgEnum('order_size', [
 
 // Products table
 export const products = pgTable('products', {
-  id: serial('id').primaryKey(),
+  id: text('id').primaryKey(),
   name: text('name').notNull(),
   description: text('description').notNull(),
-  price: decimal('price', { precision: 10, scale: 2 }).notNull(),
-  stockQuantity: serial('stock_quantity').notNull(),
   material: text('material').notNull(), // e.g., Cotton
   sizes: json('sizes').notNull(), // e.g., ["XS", "S", "M", "L", "XL", "XXL"]
-  printMethod: text('print_method').notNull(), // e.g., "Direct-to-Garment"
-  printLocation: text('print_location').notNull(), // e.g., "Front only"
+  colors: json('colors').notNull(), // e.g., ["White", "Black"]
+  price: decimal('price', { precision: 10, scale: 2 }).notNull(),
+  empire_builder_price: decimal('empire_builder_price', {
+    precision: 10,
+    scale: 2,
+  }).notNull(),
+  suggested_sales_price: decimal('suggested_sales_price', {
+    precision: 10,
+    scale: 2,
+  }).notNull(),
+  estimated_profit: decimal('estimated_profit', {
+    precision: 10,
+    scale: 2,
+  }).notNull(),
+  production_time: text('production_time').notNull(), // e.g., "3-5 business days"
+  product_care_instructions: json('product_care_instructions').notNull(), // e.g., ["Machine wash cold", "Do not dry clean", "Tumble dry low", "No chemical cleaners"]
+  print_type: text('print_method').notNull(), // e.g., "Direct-to-Garment"
+  print_location: text('print_location').notNull(), // e.g., "Front only"
   style: text('style').notNull(), // e.g., "Crew neck, short sleeves, side seamed, unisex fit"
-  careInstructions: json('care_instructions').notNull(), // e.g., ["Machine wash cold", "Do not dry clean", "Tumble dry low", "No chemical cleaners"]
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
@@ -68,7 +81,7 @@ export const users = pgTable('users', {
 
 // Orders table
 export const orders = pgTable('orders', {
-  id: serial('id').primaryKey(),
+  id: text('id').primaryKey(),
   userId: text('user_id').notNull(),
   totalAmount: decimal('total_amount', { precision: 10, scale: 2 }).notNull(),
   shippingAddress: text('shipping_address').notNull(),
@@ -82,7 +95,7 @@ export const orders = pgTable('orders', {
 
 // OrderItems table
 export const orderItems = pgTable('order_items', {
-  id: serial('id').primaryKey(),
+  id: text('id').primaryKey(),
   orderId: serial('order_id').notNull(),
   productId: serial('product_id').notNull(),
   quantity: serial('quantity').notNull(),
@@ -90,7 +103,7 @@ export const orderItems = pgTable('order_items', {
 })
 
 export const elements = pgTable('elements', {
-  id: serial('id').primaryKey(),
+  id: text('id').primaryKey(),
   symbol: text('symbol').notNull().unique(), // e.g., "H"
   name: text('name').notNull(), // e.g., "Hydrogen"
   atomicNumber: serial('atomic_number').notNull(), // e.g., 1

@@ -35,7 +35,7 @@ export const getCurrentUser = cache(async () => {
 })
 
 // Fetcher functions for React Query
-export async function getOrder(id: number) {
+export async function getOrder(id: string) {
   try {
     await mockDelay(700)
     const result = await db.query.orders.findFirst({
@@ -80,9 +80,8 @@ export async function getAllProducts() {
     return result.map((product) => ({
       ...product,
       price: Number(product.price),
-      stockQuantity: Number(product.stockQuantity),
       sizes: product.sizes as string[],
-      careInstructions: product.careInstructions as string[],
+      product_care_instructions: product.product_care_instructions as string[],
       createdAt: product.createdAt?.toString(),
       updatedAt: product.updatedAt?.toString(),
     }))

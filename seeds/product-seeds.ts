@@ -1,37 +1,44 @@
-import { Ticket } from '../models/ticket.js'
-
-export const seedTickets = async () => {
-  await Ticket.bulkCreate([
-    {
-      name: 'Design landing page',
-      status: 'In Progress',
-      description: 'Create wireframes and mockups for the landing page.',
-      assignedUserId: 1,
-    },
-    {
-      name: 'Set up project repository',
-      status: 'Done',
-      description:
-        'Create a new repository on GitHub and initialize it with a README file.',
-      assignedUserId: 2,
-    },
-    {
-      name: 'Implement authentication',
-      status: 'Todo',
-      description: 'Set up user authentication using JWT tokens.',
-      assignedUserId: 1,
-    },
-    {
-      name: 'Test the API',
-      status: 'Todo',
-      description: 'Test the API using Insomnia.',
-      assignedUserId: 1,
-    },
-    {
-      name: 'Deploy to production',
-      status: 'Todo',
-      description: 'Deploy the application to Render.',
-      assignedUserId: 2,
-    },
-  ])
-}
+export const productSeeds = [
+  {
+    name: 'Bella + Canvas 3001 Unisex T-Shirt Front Print',
+    description: `Seeking a T-shirt that's as stylish as it is comfortable? Meet the Bella + Canvas 3001 Jersey Tee, your new go-to for effortless chic. This superior quality T-shirt is made from premium cotton, offering a luxurious feel and impeccable fit. Whether you're out with friends or enjoying a laid-back day, our T-shirt ensures both style and comfort.`,
+    material: 'Cotton',
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
+    colors: ['White', 'Black'],
+    price: 11.5,
+    empire_builder_price: 7.5,
+    suggested_sales_price: 19.99,
+    estimated_profit: 8.49,
+    production_time: '3-5 business days',
+    product_care_instructions: [
+      'Machine wash cold',
+      'Do not dry clean',
+      'Tumble dry low',
+      'No chemical cleaners',
+    ],
+    style: 'Crew neck, short sleeves, side seamed, unisex fit',
+    print_type: 'Direct-to-Garment (DTG) printing for lasting colors',
+    print_location: 'Front only',
+  },
+  {
+    name: 'Bella + Canvas 3001Y Youth T-Shirt',
+    description: `Give your little one the best in comfort and style with the Bella + Canvas 3001Y Youth T-Shirt! With a classic fit, and a comfy crew neck, it's a wardrobe essential. Made from soft cotton, it's perfect for endless playtime!`,
+    material: '100% Airlume combed and ring-spun cotton',
+    sizes: ['S', 'M', 'L'],
+    colors: ['White', 'Black'],
+    price: 11.5,
+    empire_builder_price: 7.5,
+    suggested_sales_price: 19.99,
+    estimated_profit: 8.49,
+    production_time: '3-5 business days',
+    product_care_instructions: [
+      'Machine wash cold',
+      'Do not dry clean',
+      'Tumble dry low',
+      'No chemical cleaners',
+    ],
+    style: 'Crew neck, side seamed, unisex fit',
+    print_type: 'Direct-to-Garment (DTG) printing for lasting colors',
+    print_location: 'Front only',
+  },
+]
