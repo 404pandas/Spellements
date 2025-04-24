@@ -19,12 +19,12 @@ export default async function OrderPage({
   }
 
   const {
-    totalAmount,
-    shippingAddress,
-    shippingStatus,
-    orderStatus,
-    createdAt,
-    updatedAt,
+    total_amount,
+    shipping_address,
+    shipping_status,
+    order_status,
+    created_at,
+    updated_at,
     user,
   } = order
 
@@ -39,7 +39,7 @@ export default async function OrderPage({
           Back to Orders
         </Link>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <h1 className="text-3xl font-bold">{orderStatus}</h1>
+          <h1 className="text-3xl font-bold">{order_status}</h1>
           <div className="flex items-center space-x-2">
             <Link href={`/orders/${id}/edit`}>
               <Button variant="outline" size="sm">
@@ -57,11 +57,11 @@ export default async function OrderPage({
       <div className="bg-white dark:bg-dark-elevated border border-gray-200 dark:border-dark-border-default rounded-lg shadow-sm p-6 mb-8">
         <div className="flex flex-wrap gap-3 mb-6">
           <div className="text-sm text-gray-500">
-            Created {formatRelativeTime(new Date(createdAt))}
+            Created {formatRelativeTime(new Date(created_at))}
           </div>
-          {updatedAt !== createdAt && (
+          {updated_at !== created_at && (
             <div className="text-sm text-gray-500">
-              Updated {formatRelativeTime(new Date(updatedAt))}
+              Updated {formatRelativeTime(new Date(updated_at))}
             </div>
           )}
         </div>
@@ -78,17 +78,17 @@ export default async function OrderPage({
           </div>
           <div>
             <p className="text-sm font-medium text-gray-500 mb-1">Total</p>
-            <p>${totalAmount}</p>
+            <p>${total_amount}</p>
           </div>
           <div>
             <p className="text-sm font-medium text-gray-500 mb-1">Shipping</p>
-            <p>{shippingAddress}</p>
+            <p>{shipping_address}</p>
           </div>
           <div>
             <p className="text-sm font-medium text-gray-500 mb-1">
               Shipping Status
             </p>
-            <p>{shippingStatus}</p>
+            <p>{shipping_status}</p>
           </div>
         </div>
       </div>

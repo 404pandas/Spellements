@@ -65,15 +65,15 @@ const orderData: Order[] = userData.map((user, index) => {
   return {
     id: id, // Generate a unique ID for each product
 
-    userId: user.id,
-    totalAmount: totalAmount, // Ensure the total is a string with 2 decimals
-    shippingAddress: `Random Address ${index + 1}, City, State, Zip ${
+    user_id: user.id,
+    total_amount: totalAmount, // Ensure the total is a string with 2 decimals
+    shipping_address: `Random Address ${index + 1}, City, State, Zip ${
       index + 1
     }`,
-    shippingStatus: 'pending', // Default shipping status
-    orderStatus: 'processing', // Default order status
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    shipping_status: 'pending', // Default shipping status
+    order_status: 'processing', // Default order status
+    created_at: new Date(),
+    updated_at: new Date(),
   }
 })
 

@@ -3,6 +3,7 @@ import OrderForm from '@/app/components/OrderForm.js'
 import { ArrowLeftIcon } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+
 export default async function EditOrderPage({
   params,
 }: {
@@ -29,7 +30,7 @@ export default async function EditOrderPage({
       <h1 className="text-2xl font-bold mb-6">Edit Order</h1>
 
       <div className="bg-white dark:bg-dark-elevated border border-gray-200 dark:border-dark-border-default rounded-lg shadow-sm p-6">
-        <OrderForm userId={order.userId} order={order} isEditing />
+        <OrderForm userId={order.user_id} order={order} isEditing />
       </div>
     </div>
   )

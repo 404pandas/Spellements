@@ -82,15 +82,15 @@ export const users = pgTable('users', {
 // Orders table
 export const orders = pgTable('orders', {
   id: text('id').primaryKey(),
-  userId: text('user_id').notNull(),
-  totalAmount: decimal('total_amount', { precision: 10, scale: 2 }).notNull(),
-  shippingAddress: text('shipping_address').notNull(),
-  shippingStatus: shippingStatusEnum('shipping_status')
+  user_id: text('user_id').notNull(),
+  total_amount: decimal('total_amount', { precision: 10, scale: 2 }).notNull(),
+  shipping_address: text('shipping_address').notNull(),
+  shipping_status: shippingStatusEnum('shipping_status')
     .default('pending')
     .notNull(),
-  orderStatus: orderStatusEnum('order_status').default('processing').notNull(), // Added orderStatus
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  order_status: orderStatusEnum('order_status').default('processing').notNull(), // Added orderStatus
+  created_at: timestamp('created_at').defaultNow().notNull(),
+  updated_at: timestamp('updated_at').defaultNow().notNull(),
 })
 
 // OrderItems table
@@ -124,7 +124,7 @@ export const elements = pgTable('elements', {
 // Relations between tables
 export const ordersRelations = relations(orders, ({ one, many }) => ({
   user: one(users, {
-    fields: [orders.userId],
+    fields: [orders.user_id],
     references: [users.id],
   }),
   orderItems: many(orderItems),

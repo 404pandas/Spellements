@@ -8,7 +8,7 @@ interface OrderCardProps {
 }
 
 export default function OrderCard({ order }: OrderCardProps) {
-  const { id, totalAmount, createdAt, userId } = order
+  const { id, total_amount, created_at, user_id } = order
 
   return (
     <Link href={`/orders/${id}`}>
@@ -20,14 +20,14 @@ export default function OrderCard({ order }: OrderCardProps) {
         </CardHeader>
         <CardContent className="pb-2 space-y-2 text-sm text-gray-700 dark:text-gray-300">
           <div>
-            <span className="font-medium">Customer:</span> {userId || 'N/A'}
+            <span className="font-medium">Customer:</span> {user_id || 'N/A'}
           </div>
           <div>
-            <span className="font-medium">Total:</span> ${totalAmount}
+            <span className="font-medium">Total:</span> ${total_amount}
           </div>
         </CardContent>
         <CardFooter className="text-xs text-gray-500">
-          Placed {formatRelativeTime(new Date(createdAt))}
+          Placed {formatRelativeTime(new Date(created_at))}
         </CardFooter>
       </Card>
     </Link>

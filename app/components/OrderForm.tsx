@@ -2,9 +2,16 @@
 
 import { useActionState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Order, SHIPPING_STATUS } from '@/db/schema'
+import { Order } from '@/db/schema'
 import Button from './ui/Button'
-import { Form, FormGroup, FormLabel, FormSelect, FormError } from './ui/Form'
+import {
+  Form,
+  FormGroup,
+  FormLabel,
+  FormSelect,
+  FormInput,
+  FormError,
+} from './ui/Form'
 import {
   createOrder,
   updateOrder,
@@ -35,34 +42,43 @@ export default function OrderForm({
     ActionResponse,
     FormData
   >(async (prevState: ActionResponse, formData: FormData) => {
-    // Extract data from form
     const data = {
-      title: formData.get('title') as string,
-      description: formData.get('description') as string,
-      status: formData.get('status') as
-        | 'backlog'
-        | 'todo'
-        | 'in_progress'
-        | 'done',
-      priority: formData.get('priority') as 'low' | 'medium' | 'high',
-      userId,
+      total_amount: formData.get('total_amount') as string,
+      shipping_address: formData.get('shipping_address') as string,
+      shipping_status: formData.get('shipping_status') as
+        | 'pending'
+        | 'shipped'
+        | 'delivered'
+        | 'returned',
+      order_status: formData.get('order_status') as
+        | 'processing'
+        | 'completed'
+        | 'cancelled',
+      user_id: userId,
     }
 
     try {
       // Call the appropriate action based on whether we're editing or creating
       const result = isEditing
-        ? await updateOrder(Number(order!.id), data)
+        ? await updateOrder(order!.id, data)
         : await createOrder(data)
 
-      // Handle successful submission
+      // Return a result matching the ActionResponse interface
       if (result.success) {
-        router.refresh()
-        if (!isEditing) {
-          router.push('/dashboard')
+        return {
+          success: true,
+          message: isEditing
+            ? 'Order updated successfully'
+            : 'Order created successfully',
+          errors: undefined,
         }
       }
 
-      return result
+      return {
+        success: false,
+        message: 'Failed to process the order',
+        errors: undefined,
+      }
     } catch (err) {
       return {
         success: false,
@@ -72,12 +88,18 @@ export default function OrderForm({
     }
   }, initialState)
 
-  const statusOptions = Object.values(SHIPPING_STATUS).map(
-    ({ label, value }) => ({
-      label,
-      value,
-    })
-  )
+  const shippingStatusOptions = [
+    { label: 'Pending', value: 'pending' },
+    { label: 'Shipped', value: 'shipped' },
+    { label: 'Delivered', value: 'delivered' },
+    { label: 'Returned', value: 'returned' },
+  ]
+
+  const orderStatusOptions = [
+    { label: 'Processing', value: 'processing' },
+    { label: 'Completed', value: 'completed' },
+    { label: 'Cancelled', value: 'cancelled' },
+  ]
 
   return (
     <Form action={formAction}>
@@ -92,21 +114,80 @@ export default function OrderForm({
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Total Amount Field */}
         <FormGroup>
-          <FormLabel htmlFor="status">Status</FormLabel>
+          <FormLabel htmlFor="total_amount">Total Amount</FormLabel>
+          <FormInput
+            id="total_amount"
+            name="total_amount"
+            type="text"
+            defaultValue={order?.total_amount || ''}
+            required
+            aria-describedby="total_amount-error"
+            className={state?.errors?.total_amount ? 'border-red-500' : ''}
+          />
+          {state?.errors?.total_amount && (
+            <p id="total_amount-error" className="text-sm text-red-500">
+              {state.errors.total_amount[0]}
+            </p>
+          )}
+        </FormGroup>
+
+        {/* Shipping Address Field */}
+        <FormGroup>
+          <FormLabel htmlFor="shipping_address">Shipping Address</FormLabel>
+          <FormInput
+            id="shipping_address"
+            name="shipping_address"
+            type="text"
+            defaultValue={order?.shipping_address || ''}
+            required
+            aria-describedby="shipping_address-error"
+            className={state?.errors?.shipping_address ? 'border-red-500' : ''}
+          />
+          {state?.errors?.shipping_address && (
+            <p id="shipping_address-error" className="text-sm text-red-500">
+              {state.errors.shipping_address[0]}
+            </p>
+          )}
+        </FormGroup>
+
+        {/* Shipping Status Select */}
+        <FormGroup>
+          <FormLabel htmlFor="shipping_status">Shipping Status</FormLabel>
           <FormSelect
-            id="status"
-            name="status"
-            defaultValue={order?.orderStatus || 'backlog'}
-            options={statusOptions}
+            id="shipping_status"
+            name="shipping_status"
+            defaultValue={order?.shipping_status || 'pending'}
+            options={shippingStatusOptions}
             disabled={isPending}
             required
-            aria-describedby="status-error"
-            className={state?.errors?.status ? 'border-red-500' : ''}
+            aria-describedby="shipping_status-error"
+            className={state?.errors?.shipping_status ? 'border-red-500' : ''}
           />
-          {state?.errors?.status && (
-            <p id="status-error" className="text-sm text-red-500">
-              {state.errors.status[0]}
+          {state?.errors?.shipping_status && (
+            <p id="shipping_status-error" className="text-sm text-red-500">
+              {state.errors.shipping_status[0]}
+            </p>
+          )}
+        </FormGroup>
+
+        {/* Order Status Select */}
+        <FormGroup>
+          <FormLabel htmlFor="order_status">Order Status</FormLabel>
+          <FormSelect
+            id="order_status"
+            name="order_status"
+            defaultValue={order?.order_status || 'processing'}
+            options={orderStatusOptions}
+            disabled={isPending}
+            required
+            aria-describedby="order_status-error"
+            className={state?.errors?.order_status ? 'border-red-500' : ''}
+          />
+          {state?.errors?.order_status && (
+            <p id="order_status-error" className="text-sm text-red-500">
+              {state.errors.order_status[0]}
             </p>
           )}
         </FormGroup>
