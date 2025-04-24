@@ -51,6 +51,17 @@ export async function getOrder(id: string) {
   }
 }
 
+// Get user by email
+export const getUserByEmail = cache(async (email: string) => {
+  try {
+    const result = await db.select().from(users).where(eq(users.email, email))
+    return result[0] || null
+  } catch (error) {
+    console.error('Error getting user by email:', error)
+    return null
+  }
+})
+
 export async function getOrders() {
   'use cache'
   cacheTag('orders')
@@ -60,7 +71,7 @@ export async function getOrders() {
       with: {
         user: true,
       },
-      orderBy: (orders, { desc }) => [desc(orders.createdAt)],
+      orderBy: (orders, { desc }) => [desc(orders.created_at)],
     })
     return result
   } catch (error) {
@@ -79,11 +90,15 @@ export async function getAllProducts() {
     })
     return result.map((product) => ({
       ...product,
+      empire_builder_price: Number(product.empire_builder_price),
+      suggested_sales_price: Number(product.suggested_sales_price),
+      estimated_profit: Number(product.estimated_profit),
       price: Number(product.price),
       sizes: product.sizes as string[],
       product_care_instructions: product.product_care_instructions as string[],
       createdAt: product.createdAt?.toString(),
       updatedAt: product.updatedAt?.toString(),
+      colors: Array.isArray(product.colors) ? product.colors : [],
     }))
   } catch (error) {
     console.error('Error fetching products:', error)

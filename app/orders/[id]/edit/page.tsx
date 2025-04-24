@@ -1,5 +1,5 @@
 import { getOrder } from '@/lib/dal'
-import OrderForm from '@/app/components/OrderForm.js'
+import OrderForm from '@/app/components/OrderForm'
 import { ArrowLeftIcon } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'

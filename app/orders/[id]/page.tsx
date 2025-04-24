@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Button from '@/app/components/ui/Button'
 import { ArrowLeftIcon, Edit2Icon } from 'lucide-react'
-import DeleteOrderButton from '../../components/DeleteOrderButton.js'
+import DeleteOrderButton from '../../components/DeleteOrderButton'
 
 export default async function OrderPage({
   params,

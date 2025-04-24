@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Button from './ui/Button'
 import { Trash2Icon } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { deleteOrder } from '@/app/actions/orders.js'
+import { deleteOrder } from '@/app/actions/orders'
 
 interface DeleteOrderButtonProps {
   id: string

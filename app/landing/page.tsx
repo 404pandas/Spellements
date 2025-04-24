@@ -70,7 +70,6 @@ export default async function DashboardPage() {
                     {product.description}
                   </div>
                   <div className="col-span-2">{product.price}</div>
-                  <div className="col-span-2">{product.stockQuantity}</div>
                   <div className="col-span-3">{product.material}</div>
                   <div className="col-span-3">Product Sizes</div>
                   {product.sizes.map((size) => (
@@ -78,10 +77,10 @@ export default async function DashboardPage() {
                       {size}
                     </div>
                   ))}
-                  <div className="col-span-3">{product.printMethod}</div>
-                  <div className="col-span-3">{product.printLocation}</div>
+                  <div className="col-span-3">{product.print_type}</div>
+                  <div className="col-span-3">{product.print_location}</div>
                   <div className="col-span-3">{product.style}</div>
-                  {product.careInstructions.map((instruction) => (
+                  {product.product_care_instructions.map((instruction) => (
                     <div key={instruction} className="col-span-3">
                       {instruction}
                     </div>

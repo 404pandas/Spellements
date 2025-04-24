@@ -12,11 +12,7 @@ import {
   FormInput,
   FormError,
 } from './ui/Form'
-import {
-  createOrder,
-  updateOrder,
-  ActionResponse,
-} from '@/app/actions/orders.js'
+import { createOrder, updateOrder, ActionResponse } from '@/app/actions/orders'
 
 interface OrderFormProps {
   order?: Order
