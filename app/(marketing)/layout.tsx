@@ -16,14 +16,14 @@ export default async function MarketingLayout({
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-8">
             <Link href="/" className="text-xl font-bold">
-              Mode
+              Spellements
             </Link>
             <nav className="hidden md:flex gap-6">
               <Link
                 href="/features"
                 className="text-sm font-medium hover:text-purple-600"
               >
-                Features
+                Explore
               </Link>
               <Link
                 href="/pricing"
@@ -66,7 +66,10 @@ export default async function MarketingLayout({
             <div>
               <h3 className="text-lg font-semibold mb-4">Mode</h3>
               <p className="text-sm text-gray-600">
-                A modern project management tool built with Next.js.
+                Spellements is a powerful tool for creating customizable apparel
+                and goods using a generator that spells out the design using
+                elements from the periodic table. It allows users to create
+                unique and personalized items with ease.
               </p>
             </div>
             <div>
@@ -106,17 +109,15 @@ export default async function MarketingLayout({
                     href="/docs"
                     className="text-sm text-gray-600 hover:text-purple-600"
                   >
-                    Documentation
+                    Sizing Chart
                   </Link>
                 </li>
                 <li>
                   <a
-                    href="https://github.com/yourusername/mode"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="/table"
                     className="text-sm text-gray-600 hover:text-purple-600"
                   >
-                    GitHub
+                    Periodic Table
                   </a>
                 </li>
               </ul>
@@ -137,7 +138,7 @@ export default async function MarketingLayout({
           </div>
           <div className="mt-8 border-t pt-8 text-center">
             <p className="text-sm text-gray-600">
-              &copy; <Timestamp /> Mode. All rights reserved.
+              &copy; <Timestamp /> Spellements. All rights reserved.
             </p>
           </div>
         </div>

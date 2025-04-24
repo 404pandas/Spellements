@@ -9,8 +9,9 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Mode',
-  description: 'A modern issue tracking application built with Next.js 15',
+  title: 'Spellements',
+  description:
+    'Create your own custom apparel using the periodic table of elements.',
 }
 
 export default function RootLayout({
